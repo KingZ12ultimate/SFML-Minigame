@@ -99,3 +99,13 @@ Here are some useful resources if you want to learn more about CMake:
 ## License
 
 The source code is dual licensed under Public Domain and MIT -- choose whichever you prefer.
+
+## Building This Specific Project
+
+This project currently uses Boost's Optional library, so the building steps with CMake are as follows.
+
+```
+cmake -B build
+cmake --build build
+cmake --build build --target install
+```
