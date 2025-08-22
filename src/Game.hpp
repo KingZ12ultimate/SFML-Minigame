@@ -12,6 +12,7 @@ public:
 	sf::Vector2f move = { 0.0f, 0.0f }; // Movement vector for player input
 	Player player; // Player instance
 	std::vector<Platform> platforms; // Vector of platforms in the game
+	std::vector<sf::Sprite> sprites; // Vector of sprites for rendering
 
 	// Constructor that initializes the window with a given size, title, and frame rate limit.
 	Game(const sf::Vector2u& size, const char* title, unsigned int frameRateLimit = 144u);

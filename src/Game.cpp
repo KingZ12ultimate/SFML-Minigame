@@ -30,14 +30,14 @@ void Game::PollEvents()
 void Game::ProcessInput()
 {
 	move = { 0.0f, 0.0f }; // Reset movement vector
-    //if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::Up))
-    //{
-    //    move.y -= 1.0f; // Move up
-    //}
-    //if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::S) || sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::Down))
-    //{
-    //    move.y += 1.0f; // Move down
-    //}
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::Up))
+    {
+        move.y -= 1.0f; // Move up
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::S) || sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::Down))
+    {
+        move.y += 1.0f; // Move down
+    }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::Left))
     {
         move.x -= 1.0f; // Move left
@@ -99,12 +99,12 @@ void Game::Update()
     ProcessInput();
 
 	player.Update(move, deltaTime);
-    HandleCollisions();
+    // HandleCollisions();
 
     window.clear({ 0, 128, 128 });
-    for (const Platform& p : platforms)
+    for (const sf::Sprite& sprite : sprites)
     {
-        window.draw(p.shape);
+        window.draw(sprite);
 	}
     window.draw(player.sprite);
 	window.display();

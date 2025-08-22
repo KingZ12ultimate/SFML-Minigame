@@ -2,14 +2,16 @@ cmake_minimum_required(VERSION 3.28)
 project(SFML-Minigame LANGUAGES CXX)
 
 # Set output directory for the executable
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 
 # Require C++23
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-# Fetch SFML from GitHub
+set(CMP0167 NEW)
+
+# Fetch Dependencies from GitHub (e.g. SFML, Boost::optional, etc.)
 include(FetchContent)
 FetchContent_Declare(
     SFML
@@ -21,14 +23,31 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(SFML)
 
-# Collect all cpp files in src/ folder automatically
+#FetchContent_Declare(
+#    Boost
+#    URL https://github.com/boostorg/boost/releases/download/boost-1.89.0/boost-1.89.0-cmake.zip
+#    URL_MD5 2b36c6002d2a35eac3e6cb07c0097f77
+#    DOWNLOAD_EXTRACT_TIMESTAMP ON
+#    EXCLUDE_FROM_ALL
+#)
+FetchContent_Declare(
+    Boost
+    GIT_REPOSITORY https://github.com/boostorg/boost.git
+    GIT_TAG boost-1.89.0
+    GIT_SHALLOW ON
+    EXCLUDE_FROM_ALL
+)
+FetchContent_MakeAvailable(Boost)
+
+# Collect all source and header files in src/ folder automatically
 file(GLOB_RECURSE SRC_FILES "src/*.cpp")
+file(GLOB_RECURSE HEADER_FILES "src/*.hpp" "src/*.h")
 
-# Use those files in your executable target
-add_executable(App ${SRC_FILES})
+add_executable(App ${SRC_FILES} ${HEADER_FILES})
 
-# Or if you already have a target, use:
-# target_sources(App PRIVATE ${SRC_FILES})
+# Organize them in Visual Studio filters
+source_group("Source Files" FILES ${SRC_FILES})
+source_group("Header Files" FILES ${HEADER_FILES})
 
 # Link all SFML modules
 target_link_libraries(App PRIVATE
@@ -37,8 +56,8 @@ target_link_libraries(App PRIVATE
     SFML::Window
     SFML::System
     SFML::Network
+    Boost::optional
 )
-
 
 # -------------------------------------------------
 # Copy SFML DLLs to the runtime folder automatically
