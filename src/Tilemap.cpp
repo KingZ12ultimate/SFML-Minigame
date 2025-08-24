@@ -1,7 +1,7 @@
 #include "Tilemap.hpp"
 
 Tilemap::Tilemap(Tileset& tileset, int rows, int columns, const std::vector<unsigned int>& map)
-	: tileset(tileset), mapData(map), rows(rows), columns(columns), tilemapTexture(sf::Vector2u(rows* tileset.tileSize.x, columns* tileset.tileSize.y))
+	: tileset(tileset), mapData(map), rows(rows), columns(columns), tilemapTexture(sf::Vector2u(rows * tileset.tileSize.x, columns * tileset.tileSize.y))
 {
 	for (int i = 0; i < rows; i++)
 	{

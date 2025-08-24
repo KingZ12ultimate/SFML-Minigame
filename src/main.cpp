@@ -11,13 +11,18 @@
 
 const unsigned int WINDOW_WIDTH = 1280u, WINDOW_HEIGHT = 720u;
 
+bool Load(const char* tilesetPath, const sf::Vector2u& tileSize);
+
 int main()
 {  
 	std::ifstream ldtkFile("../resources/world.ldtk");
 	quicktype::LdtkJson data = nlohmann::json::parse(ldtkFile);
-    
+	ldtkFile.close();
 
-    Game game({ WINDOW_WIDTH, WINDOW_HEIGHT }, "SFML Application");
+    const auto& layer = data.get_levels()[0].get_layer_instances()->at(0);
+	sf::Texture tilesetTexture("../resources/" + layer.get_tileset_rel_path().get());
+
+    /*Game game({ WINDOW_WIDTH, WINDOW_HEIGHT }, "SFML Application");
 	game.player.sprite.setPosition({ 540.0f, 0.0f });
     game.player.sprite.setScale({ 4.0f, 4.0f });
 
@@ -31,9 +36,9 @@ int main()
             0, 2, 2, 0, 1, 1, 0, 2, 2, 0,
             0, 2, 2, 0, 2, 3, 0, 2, 2, 0,
             0, 2, 2, 0, 0, 0, 0, 2, 2, 0,
-            0, 2, 4, 2, 2, 2, 2, 2, 2, 0,
+            0, 2, 4, 1, 1, 1, 1, 2, 2, 0,
             0, 2, 2, 2, 2, 2, 2, 2, 2, 0,
-			0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         });
 
 	game.sprites.emplace_back(tilemap.tilemapTexture);
@@ -43,7 +48,7 @@ int main()
     while (game.window.isOpen())  
     {
         game.Update();
-    }  
+    }  */
 }
 
 //sf::Vector2f normalOfCollision(const sf::FloatRect& rect1, const sf::FloatRect& rect2, const sf::Vector2f& velocity1)
