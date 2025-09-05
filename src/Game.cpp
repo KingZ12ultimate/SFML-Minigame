@@ -93,20 +93,20 @@ void Game::HandleCollisions()
     }
 }
 
-void Game::Update()
+void Game::Update(const sf::Vector3i& clearColor)
 {
 	PollEvents();
     ProcessInput();
 
-	player.Update(move, deltaTime);
+	// player.Update(move, deltaTime);
     // HandleCollisions();
 
-    window.clear({ 0, 128, 128 });
+    window.clear({ clearColor.x, clearColor.y, clearColor.z });
     for (const sf::Sprite& sprite : sprites)
     {
         window.draw(sprite);
 	}
-    window.draw(player.sprite);
+    // window.draw(player.sprite);
 	window.display();
 }
 

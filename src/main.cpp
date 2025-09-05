@@ -1,5 +1,7 @@
 #include <iostream>
 #include <fstream>
+#include <sstream>
+#include <string>
 
 #include "Game.hpp"
 #include "Player.hpp"
@@ -15,18 +17,20 @@ bool Load(const char* tilesetPath, const sf::Vector2u& tileSize);
 
 int main()
 {  
-	std::ifstream ldtkFile("../resources/world.ldtk");
-	quicktype::LdtkJson data = nlohmann::json::parse(ldtkFile);
-	ldtkFile.close();
+    const std::string relPath = "../resources/";
+    std::ifstream ldtkFile("../resources/world.ldtk");
+    quicktype::LdtkJson data = nlohmann::json::parse(ldtkFile);
 
-    const auto& layer = data.get_levels()[0].get_layer_instances()->at(0);
-	sf::Texture tilesetTexture("../resources/" + layer.get_tileset_rel_path().get());
+    const auto& layer = data.get_levels()[0].get_layer_instances()[0];
+	sf::Texture tilesetTexture(relPath + layer.get_tileset_rel_path());
+    sf::Sprite tiles(tilesetTexture);
+    tiles.setPosition({ 0.0f, 0.0f });
 
-    /*Game game({ WINDOW_WIDTH, WINDOW_HEIGHT }, "SFML Application");
-	game.player.sprite.setPosition({ 540.0f, 0.0f });
+    Game game({ WINDOW_WIDTH, WINDOW_HEIGHT }, "SFML Application");
+    game.player.sprite.setPosition({ 540.0f, 0.0f });
     game.player.sprite.setScale({ 4.0f, 4.0f });
 
-	Tileset tileset("../resources/tileset.png", { 8, 8 });
+    /*Tileset tileset("../resources/tileset.png", {8, 8});
     Tilemap tilemap(tileset, 10, 10, 
         {
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -39,16 +43,16 @@ int main()
             0, 2, 4, 1, 1, 1, 1, 2, 2, 0,
             0, 2, 2, 2, 2, 2, 2, 2, 2, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        });
+        });*/
 
-	game.sprites.emplace_back(tilemap.tilemapTexture);
+	game.sprites.emplace_back(tiles);
     sf::View view(sf::FloatRect({ 0.0f, 0.0f }, { 256.0f, 144.0f }));
 	game.window.setView(view);
 
     while (game.window.isOpen())  
     {
         game.Update();
-    }  */
+    }  
 }
 
 //sf::Vector2f normalOfCollision(const sf::FloatRect& rect1, const sf::FloatRect& rect2, const sf::Vector2f& velocity1)

@@ -30,14 +30,14 @@ FetchContent_MakeAvailable(SFML)
 #    DOWNLOAD_EXTRACT_TIMESTAMP ON
 #    EXCLUDE_FROM_ALL
 #)
-FetchContent_Declare(
-    Boost
-    GIT_REPOSITORY https://github.com/boostorg/boost.git
-    GIT_TAG boost-1.89.0
-    GIT_SHALLOW ON
-    EXCLUDE_FROM_ALL
-)
-FetchContent_MakeAvailable(Boost)
+#FetchContent_Declare(
+#    Boost
+#    GIT_REPOSITORY https://github.com/boostorg/boost.git
+#    GIT_TAG boost-1.89.0
+#    GIT_SHALLOW ON
+#    EXCLUDE_FROM_ALL
+#)
+#FetchContent_MakeAvailable(Boost)
 
 # Collect all source and header files in src/ folder automatically
 file(GLOB_RECURSE SRC_FILES "src/*.cpp")
@@ -56,7 +56,7 @@ target_link_libraries(App PRIVATE
     SFML::Window
     SFML::System
     SFML::Network
-    Boost::optional
+#    Boost::optional
 )
 
 # -------------------------------------------------

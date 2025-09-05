@@ -19,7 +19,7 @@ public:
 	~Game();
 
 	// Updates the game state, including player movement and other game logic.
-	void Update();
+	void Update(const sf::Vector3i& clearColor = { 0, 128, 128 });
 
 	static sf::Vector2f NormalOfCollision(const sf::FloatRect& collision, const sf::Vector2f& pos1, const sf::Vector2f& pos2);
 private:
